@@ -29,6 +29,7 @@ a:hover {
 body {
   width: 100vw;
   height: 100vh;
+  background-color: #ffffff;
 }
 
 h1 {
@@ -76,7 +77,7 @@ button:focus-visible {
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --primary: hsl(354, 82%, 62%);
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
