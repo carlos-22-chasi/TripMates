@@ -8,13 +8,17 @@ import { chatSession } from '@/service/AIModel';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { doc, setDoc } from "firebase/firestore"; 
+import { db } from '@/service/FirebaseConfig';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
 
 function CreateTrip() {
   const [place, setPlace] = useState();
   const[formData, setFormData] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (name, value) => {
     setFormData({
@@ -43,6 +47,7 @@ function CreateTrip() {
       toast("Please fill out all details")
       return;
     }
+    setLoading(true);
     const FINAL_PROMPT = AI_PROMPT
     .replace('{location}', formData?.location?.label)
     .replace('{numOfDays}', formData?.numOfDays)
@@ -50,11 +55,11 @@ function CreateTrip() {
     .replace('{budget}', formData?.budget)
     .replace('{numOfDays}', formData?.numOfDays)
 
-    console.log(FINAL_PROMPT)
-
     const result = await chatSession.sendMessage(FINAL_PROMPT)
 
     console.log(result?.response?.text());
+    setLoading(false);
+    SaveAITrip(result?.response?.text());
   }
 
   const GetUserProfile = (tokenInfo) => {
@@ -71,6 +76,20 @@ function CreateTrip() {
       setOpenDialog(false);
       onGenerateTrip();
     })
+  }
+
+  const SaveAITrip = async(TripData) => {
+    setLoading(true);
+    const docId = Date.now().toString();
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    await setDoc(doc(db, "AITrips", docId), {
+      userSelection: formData,
+      tripData: JSON.parse(TripData), 
+      userEmail: user?.email,
+      id: docId,
+    }); 
+    setLoading(false);
   }
 
   return (
@@ -139,7 +158,11 @@ function CreateTrip() {
 
       </div>
       <div className='mt-10 flex justify-end'>
-        <Button onClick={onGenerateTrip}>Generate Trip</Button>
+        <Button disabled={loading} onClick={onGenerateTrip}>
+          {loading?
+          <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin"/>: 'Generate Trip'
+          }
+        </Button>
       </div>
       <Dialog open={openDialog}>
         <DialogContent>
