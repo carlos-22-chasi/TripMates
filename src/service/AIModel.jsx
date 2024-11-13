@@ -68,10 +68,10 @@ export const chatSession = model.startChat({
                     "geoCoordinates": "40.7829, -73.9654",
                     "ticketPricing": "Free",
                     "rating": 4.8,
-                    "timeTravel": "3-4 hours"
+                    "timeTravel": "3-4 hours",
+                    "bestTime": "Morning to Evening",
                   }
                 ],
-                "bestTime": "Morning to Evening"
               }
             ]
           }

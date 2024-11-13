@@ -11,6 +11,7 @@ import axios from 'axios';
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from '@/service/FirebaseConfig';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,6 +20,8 @@ function CreateTrip() {
   const[formData, setFormData] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const navigation=useNavigate();
 
   const handleInputChange = (name, value) => {
     setFormData({
@@ -57,7 +60,7 @@ function CreateTrip() {
 
     const result = await chatSession.sendMessage(FINAL_PROMPT)
 
-    console.log(result?.response?.text());
+    // console.log(result?.response?.text());
     setLoading(false);
     SaveAITrip(result?.response?.text());
   }
@@ -80,6 +83,7 @@ function CreateTrip() {
 
   const SaveAITrip = async(TripData) => {
     setLoading(true);
+
     const docId = Date.now().toString();
     const user = JSON.parse(localStorage.getItem('user'))
 
@@ -89,7 +93,10 @@ function CreateTrip() {
       userEmail: user?.email,
       id: docId,
     }); 
+
     setLoading(false);
+
+    navigation('/view-trip/'+docId);
   }
 
   return (
