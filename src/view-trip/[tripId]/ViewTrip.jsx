@@ -4,6 +4,7 @@ import { db } from '@/service/FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 import { toast } from 'sonner';
 import InfoSection from '../components/InfoSection';
+import Hotels from '../components/Hotels';
 
 function ViewTrip() {
   const {tripId} = useParams();
@@ -19,7 +20,7 @@ function ViewTrip() {
     const docRef = doc(db, 'AITrips', tripId);
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
-      console.log("documetn:, ", docSnap.data());
+      console.log("trip data:, ", docSnap.data());
       setTrip(docSnap.data());
     }
     else{
@@ -33,7 +34,7 @@ function ViewTrip() {
       {/* Informatino Section */}
       <InfoSection tripInfo={trip}/>
       {/* Recommended Hotels */}
-
+      <Hotels tripInfo={trip}/>
       {/* Daily Plan */}
 
       {/* Footer */}
