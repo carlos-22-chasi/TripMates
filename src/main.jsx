@@ -8,6 +8,7 @@ import Header from './components/custom/Header';
 import { Toaster } from './components/ui/sonner';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import ViewTrip from './view-trip/[tripId]/ViewTrip';
+import MyTrips from './my-trips/MyTrips';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
   {
     path:"/view-trip/:tripId",
     element:<ViewTrip/>
-  }
+  },
+  {
+    path:"/my-trips",
+    element:<MyTrips/>
+  },
 ]);
 
 createRoot(document.getElementById('root')).render(
@@ -30,6 +35,6 @@ createRoot(document.getElementById('root')).render(
       <Header/>
       <Toaster/>
       <RouterProvider router={router} />
-    </GoogleOAuthProvider>;
-  </StrictMode>,
+    </GoogleOAuthProvider>
+  </StrictMode>
 )
