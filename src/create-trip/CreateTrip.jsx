@@ -92,6 +92,7 @@ function CreateTrip() {
       tripData: JSON.parse(TripData), 
       userEmail: user?.email,
       id: docId,
+      isSaved: false,
     }); 
 
     setLoading(false);

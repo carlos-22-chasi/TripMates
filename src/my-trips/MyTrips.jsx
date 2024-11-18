@@ -18,7 +18,11 @@ function MyTrips() {
       navigation('/');
       return;
     }
-    const q = query(collection(db, 'AITrips'), where('userEmail', '==', user?.email));
+    const q = query(
+      collection(db, 'AITrips'),
+      where('userEmail', '==', user?.email),
+      where('isSaved', '==', true)
+    );
     const querySnapshot = await getDocs(q);
     setUserTrips([]);
 

@@ -7,25 +7,26 @@ import InfoSection from '../components/InfoSection';
 import Hotels from '../components/Hotels';
 import Places from '../components/Places';
 import Footer from '../components/Footer';
+import SaveTripButton from '../components/SaveTripButton';
 
 function ViewTrip() {
-  const {tripId} = useParams();
+  const { tripId } = useParams();
   const [trip, setTrip] = useState();
 
   // Call GetTripData when webpage loads in 
-  useEffect(()=>{
+  useEffect(() => {
     tripId && GetTripData();
   }, []);
 
   // Used to get Trip Infomation from Firebase
-  const GetTripData = async() => {
+  const GetTripData = async () => {
     const docRef = doc(db, 'AITrips', tripId);
     const docSnap = await getDoc(docRef);
-    if(docSnap.exists()){
+    if (docSnap.exists()) {
       console.log("trip data:, ", docSnap.data());
       setTrip(docSnap.data());
     }
-    else{
+    else {
       console.log("no such doc");
       toast("no trip found")
     }
@@ -35,18 +36,21 @@ function ViewTrip() {
     <div>
       <div className='p-10 md: px-20 lg:px-44 xl:px-56'>
         {/* Informatino Section */}
-        <InfoSection tripInfo={trip}/>
+        <InfoSection tripInfo={trip} />
         {/* Recommended Hotels */}
-        <Hotels tripInfo={trip}/>
+        <Hotels tripInfo={trip} />
         {/* Daily Plan */}
-        <Places tripInfo={trip}/>
+        <Places tripInfo={trip} />
+        <div className='flex flex-row-reverse mt-12'>
+          <SaveTripButton tripInfo={trip} />
+        </div>
       </div>
       {/* Footer */}
       <div>
-       <Footer tripInfo={trip}/>
+        <Footer tripInfo={trip} />
       </div>
     </div>
-    
+
   )
 }
 
