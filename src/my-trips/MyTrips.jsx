@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '@/service/FirebaseConfig';
 import UserTripCard from './components/UserTripCard';
 
 function MyTrips() {
-  const navigation = useNavigation();
+  const navigation = useNavigate();
   const [userTrips, setUserTrips] = useState([]);
 
   useEffect(() => {

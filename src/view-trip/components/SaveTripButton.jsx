@@ -20,6 +20,11 @@ function SaveTripButton({ tripInfo }) {
 
   const SaveAITrip = async () => {
     try {
+      const user = localStorage.getItem('user');
+      if (!user) {
+        toast("Please sign in to save trip");
+        return;
+      }
       setLoading(true);
       const docRef = doc(db, "AITrips", trip.id);
       await updateDoc(docRef, { isSaved: true });
@@ -36,6 +41,11 @@ function SaveTripButton({ tripInfo }) {
 
   const UnsaveAITrip = async () => {
     try {
+      const user = localStorage.getItem('user');
+      if (!user) {
+        toast("Please sign in to unsave trip");
+        return;
+      }
       setLoading(true);
       const docRef = doc(db, "AITrips", trip.id);
       await updateDoc(docRef, { isSaved: false });
