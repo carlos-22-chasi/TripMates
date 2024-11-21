@@ -9,6 +9,7 @@ function UserTripCard({ trip }) {
     trip && getPlacesPhoto();
   }, [trip])
 
+  // Get's the photo of the trip loaction
   const getPlacesPhoto = async () => {
     const data = {
       "textQuery": trip?.userSelection?.location?.label

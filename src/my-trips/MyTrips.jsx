@@ -8,10 +8,12 @@ function MyTrips() {
   const navigation = useNavigate();
   const [userTrips, setUserTrips] = useState([]);
 
+  // Call GetUserTrips() when page loads in
   useEffect(() => {
     GetUserTrips();
   }, [])
 
+  // Retrieve all the user's saved trips from the database
   const GetUserTrips = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user) {
@@ -42,20 +44,23 @@ function MyTrips() {
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-100 px-5 mt-10 pb-10'>
       <h2 className='font-bold text-3xl'>My Trips</h2>
 
+      {/* Card Section */}
       <div className='grid grid-cols-2 md:grid-cols-3 gap-5 mt-10'>
         {userTrips?.length > 0 ?
+          // User's trips loaded in 
           userTrips.map((trip, index) => (
             <UserTripCard trip={trip} key={index} />
           ))
           :
+          // User's trips not loaded in yet
           [1, 2, 3, 4, 5, 6].map((item, index) => (
             <div key={index} className='h-[200px] w-full bg-slate-200 animate-pulse rounded-xl flex items-center justify-center'>
               <h2>No Trips Found</h2>
             </div>
           ))
-
         }
       </div>
+
     </div>
   )
 }

@@ -66,13 +66,13 @@ function SaveTripButton({ tripInfo }) {
         <Button
           disabled={loading}
           onClick={UnsaveAITrip}
-          className='group rounded-3xl'
+          className='rounded-full hover:text-primary border-white'
         >
           {loading ? (
             <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" />
           ) : (
             <div className='flex items-center gap-2'>
-              <IoMdRemoveCircle className='group-hover:text-black' />
+              <IoMdRemoveCircle/>
               <h2>Unsave Trip</h2>
             </div>
           )}
@@ -81,13 +81,13 @@ function SaveTripButton({ tripInfo }) {
         <Button
           disabled={loading}
           onClick={SaveAITrip}
-          className='group rounded-3xl'
+          className='rounded-3xl hover:text-primary hover:border-white'
         >
           {loading ? (
             <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" />
           ) : (
             <div className='flex flex-row items-center gap-2'>
-              <FaStar className='group-hover:text-black' />
+              <FaStar/>
               <h2>Save Trip</h2>
             </div>
           )}

@@ -20,16 +20,19 @@ function CreateTrip() {
 
   const navigation = useNavigate();
 
+  // Adjust Form data on selected input 
   const handleInputChange = (name, value) => {
     setFormData({
       ...formData,
       [name]: value
     })
   }
+  // Print form data every time it updates  
   useEffect(() => {
     console.log(formData)
   }, [formData])
 
+  // Generate Itinerary using prompt with form data
   const onGenerateTrip = async () => {
     if (!formData?.location || !formData?.numOfPeople || !formData?.budget || !formData?.numOfDays) {
       toast("Please fill out all details")
@@ -54,6 +57,7 @@ function CreateTrip() {
     SaveAITrip(result?.response?.text());
   }
 
+  // Save Trip to Firebase database
   const SaveAITrip = async (TripData) => {
     setLoading(true);
 
@@ -75,13 +79,16 @@ function CreateTrip() {
 
   return (
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-100 px-5 mt-10 pb-10'>
+      {/* Create Trip Introduction */}
       <h2 className='font-bold text-3xl'>Tell us your travel prefences</h2>
       <p className='mt-3 text-gray-500 text-xl'>Just provide some basic information and our trip planner
         will generate a customized itinerary based on your preferences
       </p>
 
+      {/* Form Section */}
       <div className='mt-10 flex flex-col gap-10'>
 
+        {/* Destination Section */}
         <div>
           <h2 className='text-xl my-3 font-medium'>What is your destination of choice?</h2>
           <GooglePlacesAutocomplete
@@ -93,6 +100,7 @@ function CreateTrip() {
           />
         </div>
 
+        {/* NumOfDays Section */}
         <div>
           <h2 className='text-xl my-3 font-medium'>How many days are you planning for the trip?</h2>
           <Input
@@ -103,39 +111,45 @@ function CreateTrip() {
             onChange={(e) => handleInputChange("numOfDays", e.target.value)}
           />
         </div>
-
+        
+        {/* Budget Section */}
         <div>
           <h2 className='text-xl my-3 font-medium'>What is your desired budget for the trip?</h2>
           <div className='grid grid-cols-3 gap-5 mt-5'>
             {SelectBudgetOptions.map((item, index) => (
               <div key={index}
-                onClick={() => handleInputChange("budget", item.title)}
-                className={`p-4 border rounded-lg 
-                hover:shadow-lg hover:bg-primary hover:text-white hover:border hover:border-black 
-                ${formData?.budget == item.title && 'border-black border-2 bg-[#ff3636e0] text-white hover:border-black hover:border-2 hover:bg-[#ff3636e0]'}`}
+                onClick={() => handleInputChange("budget", item.range)}
+                className={`p-4 border rounded-lg group flex flex-col justify-between
+                hover:shadow-lg hover:bg-primary hover:text-white hover:border hover:border-green-400 
+                //item selected
+                ${formData?.budget == item.range && 'border-blue-800 border-2 bg-primary hover:border-2 hover:bg-[#ff3636e0] text-black'}`}
               >
-                <h2 className='text-2xl'>{item.icon}</h2>
-                <h2 className='font-bold text-lg'>{item.title}</h2>
-                <h2 className='text-sm text-gray-500'>{item.description}</h2>
+                <h2 className="text-2xl ">{item.icon}</h2>
+                <h2 className="font-bold text-lg group-hover:text-black">{item.title}</h2>
+                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.budget == item.range ? 'text-white' : ''}`}>{item.description}</h2>
+                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.budget == item.range ? 'text-white' : ''}`}>{item.range}</h2>
               </div>
             ))}
           </div>
         </div>
 
+        {/* NumOfPoeple Section */}
         <div>
           <h2 className='text-xl my-3 font-medium'>How many people are plannig on going?</h2>
           <div className='grid grid-cols-4 gap-2 mt-5'>
+            {/* Individual Cards */}
             {SelectTravelesList.map((item, index) => (
               <div key={index}
                 onClick={() => handleInputChange("numOfPeople", item.people)}
-                className={`p-4 border rounded-lg 
-                hover:shadow-lg hover:bg-primary hover:border hover:border-black
-                ${formData?.numOfPeople == item.people && 'border-black border-2 bg-[#ff3636e0] text-white hover:border-2 hover:bg-[#ff3636e0]'}`}
+                className={`p-4 border rounded-lg group flex flex-col justify-between
+                hover:shadow-lg hover:bg-primary hover:border hover:border-green-400
+                //item selected
+                ${formData?.numOfPeople == item.people && 'border-blue-800 border-2 bg-primary hover:border-2 hover:bg-[#ff3636e0] text-black'}`}
               >
-                <h2 className="text-2xl">{item.icon}</h2>
-                <h2 className="font-bold text-lg">{item.title}</h2>
-                <h2 className="text-sm text-gray-500">{item.description}</h2>
-                <h2 className="text-sm text-gray-500">{item.people}</h2>
+                <h2 className="text-2xl ">{item.icon}</h2>
+                <h2 className="font-bold text-lg group-hover:text-black">{item.title}</h2>
+                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.description}</h2>
+                  <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.people}</h2>
               </div>
             ))}
           </div>
@@ -143,7 +157,7 @@ function CreateTrip() {
 
       </div>
       <div className='mt-10 flex justify-end'>
-        <Button disabled={loading} onClick={onGenerateTrip}>
+        <Button disabled={loading} onClick={onGenerateTrip} className='hover:bg-white hover:text-primary'>
           {loading ?
             <AiOutlineLoading3Quarters className="h-7 w-7 animate-spin" /> : 'Generate Trip'
           }

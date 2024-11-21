@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 function HotelCard({ hotel }) {
   const [photoUrl, setPhotoUrl] = useState();
 
+  // call getPlacesPhoto every time hotel updates
   useEffect(() => {
     hotel && getPlacesPhoto();
   }, [hotel])
 
+  // Finds the hotel's photoUrl and sets it
   const getPlacesPhoto = async () => {
     const data = {
       "textQuery": hotel.hotelName

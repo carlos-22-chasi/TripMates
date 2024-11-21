@@ -35,18 +35,22 @@ export const SelectBudgetOptions=[
     title:"Cheap",
     description:"Staying Conscious",
     icon:"💵",
+    range: "$50-$100 per person per day"
   },
   {
     id:2,
     title:"Moderate",
     description:"Keeping costs on average side",
     icon:"💰",
+    range: "100-$400 per person per day"
+
   },
   {
     id:3,
     title:"Luxary",
-    description:"Woohoo",
+    description:"Ballin' Out",
     icon:"💲",
+    range: "$400+ per person per day"
   },
 ]
 

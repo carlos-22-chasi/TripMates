@@ -9,10 +9,13 @@ function InfoSection({tripInfo}) {
   // const[formData, setFormData] = useState(tripInfo?.userSelection);
   
   const [photoUrl, setPhotoUrl] = useState();
+
+  // call getPlacesPhoto every time tripInfo updates
   useEffect(() => {
     tripInfo && getPlacesPhoto();
   },[tripInfo])
 
+  // Finds the location's photoUrl and sets it
   const getPlacesPhoto = async() => {
     const data = {
       "textQuery": tripInfo?.userSelection?.location?.label
@@ -25,7 +28,9 @@ function InfoSection({tripInfo}) {
 
   return (
     <div>
+      {/* image */}
       <img src={photoUrl?photoUrl:'/logo.png'} className='h-[340px] w-full object-cover rounded-lg'/>
+      {/* location info */}
       <div className='flex items-center justify-between'>
         <div className='my-5 flex flex-col gap-2'>
           {/* <div className='flex flex-row w-full gap-10'> */}
@@ -40,11 +45,12 @@ function InfoSection({tripInfo}) {
             <Button>Submit</Button>
           </div> */}
           <div className='flex gap-5'>
-            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500'>{tripInfo?.userSelection?.numOfDays} Days</h2>
-            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500'>{tripInfo?.userSelection?.budget} Budget</h2>
-            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500'>{tripInfo?.userSelection?.numOfPeople}</h2>
+            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold'>{tripInfo?.userSelection?.numOfDays} Days</h2>
+            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold'>{tripInfo?.userSelection?.budget}</h2>
+            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold'>{tripInfo?.userSelection?.numOfPeople}</h2>
           </div>
         </div>
+        {/* Share Button */}
         <Button><FaShare /></Button>
       </div>
     </div>

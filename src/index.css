@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: hsl(354, 82%, 62%);
+  background-color: #010110;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,10 +31,12 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #ffffff;
+  background: linear-gradient(135deg, #0a0b1d, #010110); 
+  color: white;
   overflow-x: hidden; 
   min-height: 100vh; 
   overflow-y: auto; 
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 h1 {
@@ -50,13 +52,18 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: white;
+  background: var(--primary);
   cursor: pointer;
   transition: border-color 0.25s;
   border-width: 2px;
+  color: var(--primary);
+  border-color: black;
 }
 button:hover {
-  border-color: black;
+  border-color: var(--primary);
   border-width: 2px;
+  cursor: pointer;
+  scale: 105%;
 }
 button:focus,
 button:focus-visible {

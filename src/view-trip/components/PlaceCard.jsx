@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom'
 function PlaceCard({ placeInfo }) {
   const [photoUrl, setPhotoUrl] = useState();
 
+  //call getPlacesPhoto every time placeInfo updates
   useEffect(() => {
     placeInfo && getPlacesPhoto();
   }, [placeInfo])
 
+  // Finds the location's photoUrl and sets it
   const getPlacesPhoto = async () => {
     const data = {
       "textQuery": placeInfo.placeName
