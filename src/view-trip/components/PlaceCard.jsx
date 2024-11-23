@@ -23,8 +23,8 @@ function PlaceCard({ placeInfo }) {
   }
 
   return (
-    <div className='border p-3 mt-2 h-full flex gap-5 hover:scale-105 transition-all hover-shadow'>
-      <img src={photoUrl?photoUrl:'/logo.png'} className='w-[130px] h-[130px] rounded-xl'/>
+    <div className='border p-3 mt-2 h-full flex flex-col gap-5 hover:scale-105 transition-all hover-shadow sm:flex-row'>
+      <img src={photoUrl?photoUrl:'/logo.png'} className='w-full sm:w-[130px] sm:h-[130px] rounded-xl'/>
       <div>
         <h2 className='font-bold text-lg'>{placeInfo.placeName}</h2>
         <p className='text-xs md:text-sm text-gray-500'>{placeInfo.placeDetails}</p>

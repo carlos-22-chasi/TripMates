@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Hero() {
   return (
-    <div className='flex flex-col items-center justify-center mx-56 gap-9 pb-20'>
+    <div className='flex flex-col items-center justify-center mx-10 sm:mx-56 gap-9 pb-20'>
       {/* Introduction Text */}
       <h1 className='font-extrabold md:text-[60px] text-[primary-500] text-center mt-10'>
         <span className='text-primary'>Your AI Travel Campanion: </span> 
@@ -18,7 +18,7 @@ function Hero() {
       </Link>
 
       {/* Front Image */}
-      <img src='/front.png' className='mt-20'></img>
+      <img src='/front.png' className='mt-4 md:mt-20 w-full'></img>
 
     </div>
   )

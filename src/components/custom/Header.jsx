@@ -33,34 +33,34 @@ function Header() {
   };
 
   return (
-    <div className='p-2 shadow-sm flex justify-between items-center border-b-2 border-white bg-white'>
+    <div className='p-2 shadow-sm flex justify-between items-center bg-blue-300'>
       {/* Trip Mates Logo */}
-      <div className='flex items-center py-3 cursor-pointer ml-5'>
+      <div className='flex items-center py-3 cursor-pointer msl-2 sm:ml-5'>
         <a href='/' className='text-black flex items-center hover:text-primary hover:scale-105'>
-          <img src='/logo.png' alt='Logo' className='w-8 h-8 mr-2' />
-          <p className='text-lg font-semibold'>Trip Mates</p>
+          <img src='/logo.png' alt='Logo' className='w-6 sm:w-8 sm:h-8 mr-2' />
+          <p className='text-sm sm:text-lg font-semibold'>Trip Mates</p>
         </a>
       </div>
 
       {/* Right Side */}
-      <div className='mr-5'>
+      <div className='mr-2 sm:mr-5'>
 
         {user ? 
         // Signed In 
         (
-          <div className='flex items-center gap-5'>
+          <div className='flex items-center gap-2 sm:gap-5'>
             <a href='/create-trip'>
-              <Button className='rounded-full'>+ Create Trip</Button>
+              <Button className='rounded-full text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2'>+ Create Trip</Button>
             </a>
             <a href='/my-trips'>
-              <Button className='rounded-full'>My Trips</Button>
+              <Button className='rounded-full text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2'>My Trips</Button>
             </a>
             <Popover>
-              <PopoverTrigger className='bg-white h-[45px] rounded-full p-0 border-0 hover:border-0'>
+              <PopoverTrigger className='bg-white h-[35px] sm:h-[45px] w-[35px] sm:w-[45px] rounded-full p-0 border-0 hover:border-0'>
                 <img
                   src={user?.picture || '/default-avatar.jpg'}
                   alt="User Avatar"
-                  className='h-[45px] w-[45px] rounded-full'
+                  className='h-[35px] sm:h-[45px] w-[35px] sm:w-[45px] rounded-full'
                 />
               </PopoverTrigger>
               <PopoverContent>
@@ -81,22 +81,27 @@ function Header() {
         : 
         // Not Signed In
         (
-          <Button onClick={() => setOpenDialog(true)}>Sign In</Button>
+          <Button 
+          onClick={() => setOpenDialog(true)}
+           className='text-xs sm:text-sm px-3 py-1 sm:px-4 sm:py-2'
+          >
+            Sign In
+          </Button>
         )}
       </div>
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-        <DialogContent>
+        <DialogContent className='w-30 sm:w-full mx-auto'>
           <DialogHeader>
             <DialogTitle></DialogTitle>
             <DialogDescription>
               <div className='flex items-center'>
-                <img src='/logo.png' alt='Logo' className='w-8 h-8 mr-2' />
-                <p className='text-lg font-semibold'>Trip Mates</p>
+                <img src='/logo.png' alt='Logo' className='w-6 h-6 sm:w-8 sm:h-8 mr-2' />
+                <p className='text-sm sm:text-lg font-semibold'>Trip Mates</p>
               </div>
               <div>
-                <h2 className='font-bold text-lg mt-5'>Sign in with Google</h2>
-                <p>Sign in to the App with Google Authentication securely</p>
-                <Button onClick={login} className="w-full mt-5">Sign In With Google</Button>
+                <h2 className='font-bold text-sm sm:text-lg mt-3'>Sign in with Google</h2>
+                <p className='text-xs sm:text-sm'>Sign in to the App with Google Authentication securely</p>
+                <Button onClick={login} className="w-full text-xs sm:text-sm px-3 py-2 mt-5">Sign In With Google</Button>
               </div>
             </DialogDescription>
           </DialogHeader>

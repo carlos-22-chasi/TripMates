@@ -192,15 +192,15 @@ function CreateTrip() {
             {SelectBudgetOptions.map((item, index) => (
               <div key={index}
                 onClick={() => handleInputChange("budget", item.range)}
-                className={`p-4 border rounded-lg group flex flex-col justify-between
+                className={`p-2 sm:p-4 border rounded-lg group flex flex-col justify-between text-center sm:text-left
                 hover:shadow-lg hover:bg-primary hover:text-white hover:border hover:border-green-400 
                 //item selected
                 ${formData?.budget == item.range && 'border-blue-800 border-2 bg-primary hover:border-2 hover:bg-[#ff3636e0] text-black'}`}
               >
                 <h2 className="text-2xl ">{item.icon}</h2>
-                <h2 className="font-bold text-lg group-hover:text-black">{item.title}</h2>
-                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.budget == item.range ? 'text-white' : ''}`}>{item.description}</h2>
-                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.budget == item.range ? 'text-white' : ''}`}>{item.range}</h2>
+                <h2 className="font-bold text-base sm:text-lg group-hover:text-black">{item.title}</h2>
+                <h2 className={`text-xs sm:text-sm text-primary group-hover:text-white ${formData?.budget == item.range ? 'text-white' : ''}`}>{item.description}</h2>
+                <h2 className={`text-xs sm:text-sm font-semibold text-gray-500 group-hover:text-blue-950 ${formData?.budget == item.range ? 'text-blue-950' : ''}`}>{item.range}</h2>
               </div>
             ))}
           </div>
@@ -214,15 +214,15 @@ function CreateTrip() {
             {SelectTravelesList.map((item, index) => (
               <div key={index}
                 onClick={() => handleInputChange("numOfPeople", item.people)}
-                className={`p-4 border rounded-lg group flex flex-col justify-between
+                className={`p-2 sm:p-4 border rounded-lg group flex flex-col text-center sm:text-left justify-between 
                 hover:shadow-lg hover:bg-primary hover:border hover:border-green-400
                 //item selected
                 ${formData?.numOfPeople == item.people && 'border-blue-800 border-2 bg-primary hover:border-2 hover:bg-[#ff3636e0] text-black'}`}
               >
                 <h2 className="text-2xl ">{item.icon}</h2>
                 <h2 className="font-bold text-lg group-hover:text-black">{item.title}</h2>
-                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.description}</h2>
-                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.people}</h2>
+                <h2 className={`text-xs sm:text-sm text-primary group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.description}</h2>
+                <h2 className={`text-xs sm:text-sm font-bold text-gray-500 group-hover:text-blue-950 ${formData?.numOfPeople == item.people ? 'text-blue-950' : ''}`}>{item.people}</h2>
               </div>
             ))}
           </div>

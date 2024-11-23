@@ -22,13 +22,13 @@ function UserTripCard({ trip }) {
   return (
     <Link to={'/view-trip/' + trip?.id}>
       <div className='hover:scale-105 transition-all'>
-        <img src={photoUrl ? photoUrl : '/logo..png'}  className='object-cover rounded-xl w-full h-[200px]'/>
+        <img src={photoUrl ? photoUrl : '/logo..png'}  className='object-cover rounded-xl w-full h-[100px] sm:h-[200px]'/>
         <div className='mt-2'>
-          <h2 className='font-bold text-lg'>
+          <h2 className='font-bold text-base sm:text-lg'>
             {trip?.userSelection?.location?.label} 
-            <span className='font-medium text-white text-base'> ({trip?.userSelection?.startDate} - {trip?.userSelection?.endDate})</span>
+            <span className='font-medium text-white text-sm sm:text-base'> ({trip?.userSelection?.startDate} - {trip?.userSelection?.endDate})</span>
           </h2>
-          <div className='font-small text-primary flex flex-col'>
+          <div className='text-sm sm:text-base font-small text-primary flex flex-col'>
             <h2>Budget: {trip?.userSelection?.budget}</h2>
             <h2>Group Size: {trip?.userSelection?.numOfPeople}</h2>
             </div>

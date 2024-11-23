@@ -8,7 +8,7 @@ export const SelectTravelesList = [
   },
   {
     id:2,
-    title:"A Couple",
+    title:"Couple",
     description:"Two travelers making memories",
     icon:"👥",
     people:'2 People',
@@ -33,14 +33,14 @@ export const SelectBudgetOptions=[
   {
     id:1,
     title:"Cheap",
-    description:"Staying Conscious",
+    description:"Keeping costs low",
     icon:"💵",
     range: "$50-$100 per person per day"
   },
   {
     id:2,
     title:"Moderate",
-    description:"Keeping costs on average side",
+    description:"Staying Conscious",
     icon:"💰",
     range: "100-$400 per person per day"
 
