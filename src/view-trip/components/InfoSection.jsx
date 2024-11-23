@@ -45,9 +45,9 @@ function InfoSection({tripInfo}) {
             <Button>Submit</Button>
           </div> */}
           <div className='flex gap-5'>
-            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold'>{tripInfo?.userSelection?.numOfDays} Days</h2>
-            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold'>{tripInfo?.userSelection?.budget}</h2>
-            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold'>{tripInfo?.userSelection?.numOfPeople}</h2>
+            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold text-center'>{tripInfo?.userSelection?.startDate} to {tripInfo?.userSelection?.endDate}</h2>
+            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold text-center'>{tripInfo?.userSelection?.budget}</h2>
+            <h2 className='p-1 px-3 bg-gray-200 rounded-full text-gray-500 font-bold text-center'>{tripInfo?.userSelection?.numOfPeople}</h2>
           </div>
         </div>
         {/* Share Button */}

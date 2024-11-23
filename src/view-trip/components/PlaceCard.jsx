@@ -29,6 +29,8 @@ function PlaceCard({ placeInfo }) {
         <h2 className='font-bold text-lg'>{placeInfo.placeName}</h2>
         <p className='text-xs md:text-sm text-gray-500'>{placeInfo.placeDetails}</p>
         <h2 className='text-primary font-medium text-sm'>Best Time to Visit: {placeInfo.bestTime}</h2>
+        <h2 className='text-primary font-medium text-sm'>Average Price: {placeInfo.ticketPricing}</h2>
+        <h2 className='text-primary font-medium text-sm'>Spending Time: {placeInfo.timeToSpend}</h2>
         <h2>{placeInfo.timeTravel}</h2>
         <Link to={'https://www.google.com/maps/search/?api=1&query='+placeInfo.placeName} target='blank'>
          <Button className='h-5'>🗺️</Button>

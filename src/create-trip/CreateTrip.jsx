@@ -5,7 +5,6 @@ import { AI_PROMPT, SelectBudgetOptions, SelectTravelesList } from '@/constants/
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner"
 import { chatSession } from '@/service/AIModel';
-import axios from 'axios';
 import { doc, setDoc } from "firebase/firestore";
 import { db } from '@/service/FirebaseConfig';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -34,25 +33,42 @@ function CreateTrip() {
 
   // Generate Itinerary using prompt with form data
   const onGenerateTrip = async () => {
-    if (!formData?.location || !formData?.numOfPeople || !formData?.budget || !formData?.numOfDays) {
+    // check that form is fully filled out 
+    if (!formData?.location || !formData?.numOfPeople || !formData?.budget || !formData?.startDate || !formData?.endDate) {
       toast("Please fill out all details")
       return;
     }
-    if (formData?.numOfDays < 1 || formData?.numOfDays > 30) {
-      toast("Please enter a number of days value in the range 1-30")
+
+    const startDate = new Date(formData?.startDate);
+    const endDate = new Date(formData?.endDate);
+    // ensure that start date is before end date
+    if (endDate <= startDate) {
+      toast("End date must be after the start date!");
       return;
     }
+
+    // Calculate the number of days if the dates are valid
+    const diffInMs = endDate - startDate;
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24); // Convert ms to days
+    if (diffInDays > 20) {
+      toast("Please enter detes that are less that 20 days apart");
+      return;
+    }
+
     setLoading(true);
     const FINAL_PROMPT = AI_PROMPT
       .replace('{location}', formData?.location?.label)
-      .replace('{numOfDays}', formData?.numOfDays)
+      .replace('{startDate}', formData?.startDate)
+      .replace('{endDate}', formData?.endDate)
       .replace('{numOfPeople}', formData?.numOfPeople)
       .replace('{budget}', formData?.budget)
-      .replace('{numOfDays}', formData?.numOfDays)
+      .replace('{startDate}', formData?.startDate)
+      .replace('{endDate}', formData?.endDate)
 
+    console.log("final prompt: ", FINAL_PROMPT);
     const result = await chatSession.sendMessage(FINAL_PROMPT)
 
-    // console.log(result?.response?.text());
+    console.log("response: ", result?.response?.text());
     setLoading(false);
     SaveAITrip(result?.response?.text());
   }
@@ -95,23 +111,80 @@ function CreateTrip() {
             apiKey={import.meta.env.VITE_GOOGLE_PLACE_API_KEY}
             selectProps={{
               place,
-              onChange: (v) => { setPlace(v); handleInputChange('location', v); }
+              onChange: (v) => {
+                setPlace(v);
+                handleInputChange('location', v);
+              },
+              styles: {
+                control: (provided) => ({ // control section
+                  ...provided,
+                  backgroundColor: "#1a202c", 
+                  color: "#fff", 
+                  border: "1px solid #4A5568", 
+                  borderRadius: "8px", 
+                  padding: "5px",
+                }),
+                input: (provided) => ({ //input
+                  ...provided,
+                  color: "#fff", 
+                }),
+                placeholder: (provided) => ({ // placeholder
+                  ...provided,
+                  color: "#A0AEC0", 
+                }),
+                singleValue: (provided) => ({ // selected item
+                  ...provided,
+                  color: "#fff", 
+                }),
+                menu: (provided) => ({ // drop down menu 
+                  ...provided,
+                  backgroundColor: "#2D3748",
+                  color: "#fff", 
+                  borderRadius: "8px",
+                }),
+                option: (provided, state) => ({ // options from drop down menu 
+                  ...provided,
+                  backgroundColor: state.isFocused ? "#4A5568" : "#2D3748", 
+                  color: "#fff",
+                }),
+              },
             }}
           />
         </div>
 
+
         {/* NumOfDays Section */}
         <div>
-          <h2 className='text-xl my-3 font-medium'>How many days are you planning for the trip?</h2>
-          <Input
-            placeholder={"Ex.3"}
-            type="number"
-            min="1"
-            max="30"
-            onChange={(e) => handleInputChange("numOfDays", e.target.value)}
-          />
+          <h2 className="text-xl my-3 font-medium">What are the start and end dates of your trip?</h2>
+          <div className="flex flex-row gap-4 w-10">
+            {/* Start Date Input */}
+            <div>
+              <label htmlFor="start-date" className="block text-sm font-semibold text-primary">
+                Start Date
+              </label>
+              <Input
+                id="start-date"
+                type="date"
+                onChange={(e) => handleInputChange('startDate', new Date(e.target.value).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }))}
+                className='bg-slate-800 mt-1'
+              />
+            </div>
+
+            {/* End Date Input */}
+            <div>
+              <label htmlFor="end-date" className="block text-sm font-semibold text-primary">
+                End Date
+              </label>
+              <Input
+                id="end-date"
+                type="date"
+                onChange={(e) => handleInputChange('endDate',new Date(e.target.value).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }))}
+                className='bg-slate-800 mt-1'
+              />
+            </div>
+          </div>
         </div>
-        
+
         {/* Budget Section */}
         <div>
           <h2 className='text-xl my-3 font-medium'>What is your desired budget for the trip?</h2>
@@ -149,7 +222,7 @@ function CreateTrip() {
                 <h2 className="text-2xl ">{item.icon}</h2>
                 <h2 className="font-bold text-lg group-hover:text-black">{item.title}</h2>
                 <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.description}</h2>
-                  <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.people}</h2>
+                <h2 className={`text-sm text-gray-500 group-hover:text-white ${formData?.numOfPeople == item.people ? 'text-white' : ''}`}>{item.people}</h2>
               </div>
             ))}
           </div>

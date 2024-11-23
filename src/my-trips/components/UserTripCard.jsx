@@ -24,8 +24,14 @@ function UserTripCard({ trip }) {
       <div className='hover:scale-105 transition-all'>
         <img src={photoUrl ? photoUrl : '/logo..png'}  className='object-cover rounded-xl w-full h-[200px]'/>
         <div className='mt-2'>
-          <h2 className='font-bold text-lg'>{trip?.userSelection?.location?.label}</h2>
-          <h2 className='font-small text-primary'>{trip?.userSelection?.numOfDays} Day trip with {trip?.userSelection?.budget} Budget for {trip?.userSelection?.numOfPeople}</h2>
+          <h2 className='font-bold text-lg'>
+            {trip?.userSelection?.location?.label} 
+            <span className='font-medium text-white text-base'> ({trip?.userSelection?.startDate} - {trip?.userSelection?.endDate})</span>
+          </h2>
+          <div className='font-small text-primary flex flex-col'>
+            <h2>Budget: {trip?.userSelection?.budget}</h2>
+            <h2>Group Size: {trip?.userSelection?.numOfPeople}</h2>
+            </div>
 
         </div>
       </div>
